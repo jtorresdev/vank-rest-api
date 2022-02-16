@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  api:
+    container_name: vank-rest-api
+    restart: always
+    build: .
+    command: npm run dev
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./:/usr/src/app
+    links:
+      - mongo
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none

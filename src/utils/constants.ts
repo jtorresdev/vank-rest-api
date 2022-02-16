@@ -1,0 +1,13 @@
+export const invoiceFromCSVKeys = {
+  INVOICE_ID      : 'invoiceId',
+  VENDOR_ID       : 'vendorId',
+  INVOICE_NUMBER  : 'invoiceNumber',
+  INVOICE_DATE    : 'invoiceDate',
+  INVOICE_TOTAL   : 'invoiceTotal',
+  PAYMENT_TOTAL   : 'paymentTotal',
+  CREDIT_TOTAL    : 'creditTotal',
+  BANK_ID         : 'bankId',
+  INVOICE_DUE_DATE: 'invoiceDueDate',
+  PAYMENT_DATE    : 'paymentDate',
+  CURRENCY        : 'currency'
+}
