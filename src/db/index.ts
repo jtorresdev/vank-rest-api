@@ -7,10 +7,9 @@ const connectMongoDB = async () => {
 
   try {
     await mongoose.connect(dbUri)
-    logger.info('Connected to db');
+    logger.info('Connected to db')
   } catch (error) {
-    console.log("🚀 ~ file: index.ts ~ line 12 ~ connectMongoDB ~ error", error)
-    logger.error('Could not connect to db');
+    logger.error('Could not connect to db')
   }
     
 }

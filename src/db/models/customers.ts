@@ -1,9 +1,9 @@
 import {Schema, model} from 'mongoose'
 
 export enum Currency {
-  USD = "USD",
-  EUR = "EUR",
-  CLP = "CLP"
+  USD = 'USD',
+  EUR = 'EUR',
+  CLP = 'CLP'
 }
 
 export interface Customer {
@@ -11,8 +11,8 @@ export interface Customer {
   internalCode: string;
   idTax: string;
   currency: Currency;
-  apiQuota: number;
-  bankRecords: number[];
+  apiQuota?: number;
+  bankRecords?: number[];
 }
   
 const CustomerSchema = new Schema<Customer>({
@@ -21,7 +21,7 @@ const CustomerSchema = new Schema<Customer>({
   idTax       : {type: String, required: true},
   currency    : {type: String, required: true, enum: Object.values(Currency)},
   apiQuota    : {type: Number, default: 0},
-  bankRecords : [{type: Number}]
+  bankRecords : [ {type: Number} ]
 })
 
 const CustomerModel = model<Customer>('Customer', CustomerSchema)

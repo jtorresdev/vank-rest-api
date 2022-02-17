@@ -16,10 +16,62 @@
         ],
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "error",
+        "comma-style": [
+            "error",
+            "last"
+        ],
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "comma-dangle": [
+            2,
+            "never"
+        ],
+        "semi": [
+            2,
+            "never"
+        ],
+        "curly": [
+            2,
+            "multi",
+            "consistent"
+        ],
+        "space-in-parens": [
+            2,
+            "never"
+        ],
+        "space-before-blocks": [
+            2,
+            "always"
+        ],
         "key-spacing": [
             2,
             {
                 "align": "colon"
+            }
+        ],
+        "array-bracket-spacing": [
+            "error",
+            "always"
+        ],
+        "quotes": [
+            2,
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 150,
+                "ignoreUrls": true,
+                "ignoreStrings": true,
+                "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
             }
         ]
     }

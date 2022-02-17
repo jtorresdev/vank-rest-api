@@ -1,6 +1,6 @@
-import { formatInvoice } from "../../src/utils/format"
+import { formatInvoice } from '../../src/utils/format'
 
-describe('Formatting', () => {
+describe('Format utils', () => {
   it('should format invoice from csv', () => {
     const invoice = {
       INVOICE_ID      : 92,
@@ -20,14 +20,14 @@ describe('Formatting', () => {
 
     expect(json).toHaveProperty('invoiceId', 92)
     expect(json).toHaveProperty('vendorId', 80)
-    expect(json).toHaveProperty('invoiceNumber', "133560")
-    expect(json).toHaveProperty('invoiceDate', new Date("01-JUN-14"))
+    expect(json).toHaveProperty('invoiceNumber', '133560')
+    expect(json).toHaveProperty('invoiceDate', new Date('01-JUN-14'))
     expect(json).toHaveProperty('invoiceTotal', 175)
     expect(json).toHaveProperty('paymentTotal', 175)
     expect(json).toHaveProperty('creditTotal', 0)
     expect(json).toHaveProperty('bankId', 2)
-    expect(json).toHaveProperty('invoiceDueDate', new Date("20-JUN-14"))
-    expect(json).toHaveProperty('paymentDate', new Date("03-JUN-14"))
+    expect(json).toHaveProperty('invoiceDueDate', new Date('20-JUN-14'))
+    expect(json).toHaveProperty('paymentDate', new Date('03-JUN-14'))
     expect(json).toHaveProperty('currency', 'CLP')
   })
 })

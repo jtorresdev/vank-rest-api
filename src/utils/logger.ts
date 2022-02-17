@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 
 export default logger({
   prettyPrint: true,
-  base: {
-    pid: false,
+  base       : {
+    pid: false
   },
   timestamp: () => `,"time":"${dayjs().format()}"`
 })

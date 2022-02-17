@@ -1,34 +1,87 @@
-import csvtojson from 'csvtojson'
+import config from 'config'
 import fetch from 'node-fetch'
-import InvoiceModel from '../db/models/invoices';
-import { formatInvoice } from '../utils/format';
+import csvtojson from 'csvtojson'
+import { Currency } from '../db/models/customers'
+import InvoiceModel, { Invoice } from '../db/models/invoices'
+import { formatInvoice } from '../utils/format'
+import dayjs from 'dayjs'
+import { convertCurrency } from '../utils/currency'
+import Customers from './customers'
 
-const {INVOICES_CSV_SOURCE} = process.env
+export interface GetInvoicesFilters {
+  vendorId: number;
+  invoiceDate: string;
+  currency?: Currency
+}
 
 class Invoices {
-  /*async getInvoicesByVendorId(vendorId: string, invoiceDate: Date, currency?: Currency){
-    try {
-      
-    } catch (error) {
-      return 'ERROR'
-    }
-  }*/
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async fetchInvoices(invoicesSourceUri: string): Promise<string> {
+    if(!invoicesSourceUri) throw new Error('Invoices csv source is required')
 
-  async fetchInvoices(){
-    try {
-      if(!INVOICES_CSV_SOURCE) throw new Error('Invoices csv source is required')
+    const fetchCSV = await (await fetch(invoicesSourceUri)).text()
 
-      const fetchCSV = await fetch(INVOICES_CSV_SOURCE, {method: 'GET'});
-      const invoices = await csvtojson().fromString(await fetchCSV.text())
+    const invoicesJSON = await csvtojson().fromString(fetchCSV)
+    
+    const invoicesParsed = invoicesJSON.map((invoice) => formatInvoice(invoice))
 
-      const invoicesParsed = invoices.map((invoice) => formatInvoice(invoice))
+    const saveInvoices = await InvoiceModel.insertMany(invoicesParsed)
 
-      const saveInvoices = await InvoiceModel.insertMany(invoicesParsed)
+    return `${saveInvoices.length} invoices saved`
+  }
 
-      return `${saveInvoices.length} invoices saved`
-    } catch (error) {
-      return error.message
-    }
+  async getInvoices(internalCode: string, {vendorId, invoiceDate, currency}: GetInvoicesFilters): Promise<Invoice[]> {
+    const customersService = new Customers()
+    
+    const baseCurrency = currency || await customersService.getCurrencyByInternalCode(internalCode)
+
+    const {baseUri, token} = config.get('currencyConverter')
+
+    const toConvert = Object.values(Currency)
+      .filter(currency => currency !== baseCurrency)
+      .map(currency => {
+        return `${baseCurrency}_${currency}`
+      })
+        
+    const rates = await (await fetch(`${baseUri}/convert?q=${toConvert.join(',')}&compact=ultra&apiKey=${token}`)).json()
+
+    const date = dayjs(invoiceDate)
+
+    const invoices = await InvoiceModel
+      .find({
+        vendorId,
+        invoiceDate: {
+          $gte: date.startOf('day').toDate(),
+          $lte: date.endOf('day').toDate()
+        }
+      })
+      .select({
+        invoiceId    : 1,
+        vendorId     : 1,
+        invoiceNumber: 1,
+        invoiceTotal : 1,
+        paymentTotal : 1,
+        creditTotal  : 1,
+        bankId       : 1,
+        currency     : 1
+      })
+      .lean()
+        
+    return invoices.map((invoice: Invoice) => {
+      const {invoiceTotal, paymentTotal, creditTotal, currency} = invoice
+
+      if(currency === baseCurrency) return invoice
+
+      const rate = rates[`${baseCurrency}_${currency}`]
+
+      return {
+        ...invoice,
+        invoiceTotal: convertCurrency(rate, invoiceTotal), 
+        paymentTotal: convertCurrency(rate, paymentTotal), 
+        creditTotal : convertCurrency(rate, creditTotal),
+        currency    : Currency[baseCurrency]
+      }
+    })
   }
 }
 
