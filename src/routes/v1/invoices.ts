@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { getInvoices } from '../../controllers/invoices'
+import { cacheMiddleware } from '../../middleware'
 
 const router = Router()
 
@@ -56,7 +57,7 @@ const router = Router()
 
 /**
  * @swagger
- * /api/v1/invoices/get/{internalCode}:
+ * /api/v1/invoices/{internalCode}:
  *  get:
  *    summary: Get invoices of customer
  *    tags:
@@ -98,6 +99,6 @@ const router = Router()
  *                      items:
  *                          $ref: '#/components/schemas/Invoice'
  */
-router.get('/get/:internalCode', getInvoices)
+router.get('/:internalCode', cacheMiddleware.route(), getInvoices)
 
 export default router

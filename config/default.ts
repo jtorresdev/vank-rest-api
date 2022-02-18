@@ -8,5 +8,9 @@ export default {
   currencyConverter: {
     baseUri: process.env.CURRENCY_CONVERTER_API,
     token  : process.env.CURRENCY_CONVERTER_TOKEN
+  },
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT
   }
 }
