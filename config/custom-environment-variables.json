@@ -1,0 +1,12 @@
+{
+    "port": "PORT",
+    "dbUri": "MONGO_URI",
+    "dbUriAgenda": "AGENDA_MONGO_URI",
+    "currencyConverter": {
+        "token": "CURRENCY_CONVERTER_TOKEN"
+    },
+    "redis": {
+        "host": "REDIS_HOST",
+        "port": "REDIS_PORT"
+    }
+}

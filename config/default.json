@@ -1,0 +1,14 @@
+{
+  "port": "1337",
+  "dbUri": "mongodb://mongo:27017/vank",
+  "invoicesCSVsource": "https://gist.githubusercontent.com/rogelio-meza-t/f70a484ec20b8ea43c67f95a58597c29/raw/41f289c605718e923fc1fad0539530e4d0413a90/invoices.csv",
+  "dbUriAgenda": "mongodb://mongo:27017/agenda",
+  "currencyConverter": {
+    "baseUri": "https://free.currconv.com/api/v7",
+    "token": "2813b4bfaa168d29afa8"
+  },
+  "redis": {
+    "host": "redis",
+    "port": "6379"
+  }
+}
