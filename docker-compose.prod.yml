@@ -5,5 +5,7 @@ services:
     restart: always
     build: .
     command: bash -c "npm run build && npm start"
+    ports:
+      - "80:80"
     volumes:
       - ./:/node/app
