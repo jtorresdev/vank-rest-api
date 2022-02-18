@@ -1,18 +1,18 @@
 import { formatInvoice } from '../../src/utils/format'
 
 describe('Format utils', () => {
-  it('should format invoice from csv', () => {
+  it('should format invoice from json', () => {
     const invoice = {
-      INVOICE_ID      : 92,
-      VENDOR_ID       : 80,
+      INVOICE_ID      : '92',
+      VENDOR_ID       : '80',
       INVOICE_NUMBER  : '133560',
-      INVOICE_DATE    : new Date('01-JUN-14'),
-      INVOICE_TOTAL   : 175,
-      PAYMENT_TOTAL   : 175,
-      CREDIT_TOTAL    : 0,
-      BANK_ID         : 2,
-      INVOICE_DUE_DATE: new Date('20-JUN-14'),
-      PAYMENT_DATE    : new Date('03-JUN-14'),
+      INVOICE_DATE    : '01-JUN-14',
+      INVOICE_TOTAL   : '175',
+      PAYMENT_TOTAL   : '175',
+      CREDIT_TOTAL    : '0',
+      BANK_ID         : '2',
+      INVOICE_DUE_DATE: '20-JUN-14',
+      PAYMENT_DATE    : '03-JUN-14',
       CURRENCY        : 'CLP'
     }
 
