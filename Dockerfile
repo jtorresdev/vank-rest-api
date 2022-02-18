@@ -11,5 +11,3 @@ RUN npm install
 WORKDIR /node/app
 
 COPY . .
-
-EXPOSE 1337
