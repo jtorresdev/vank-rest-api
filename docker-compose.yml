@@ -9,7 +9,7 @@ services:
     ports:
       - "1337:1337"
     volumes:
-      - ./:/usr/src/app
+      - ./:/node/app
     links:
       - mongo
       - redis
@@ -18,6 +18,8 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongodb:/data/db
     logging:
       driver: none
 
@@ -26,5 +28,10 @@ services:
     image: redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis:/data/redisdb
     logging:
       driver: none
+volumes:
+  mongodb:
+  redis:
