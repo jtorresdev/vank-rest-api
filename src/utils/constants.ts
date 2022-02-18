@@ -1,5 +1,3 @@
-import path from 'path'
-
 export const invoiceFromCSVKeys = {
   INVOICE_ID      : 'invoiceId',
   VENDOR_ID       : 'vendorId',
@@ -22,5 +20,5 @@ export const swaggerOptions = {
       version: '1.0.0'
     }
   },
-  apis: [ `${path.join(__dirname, '../routes/v1/*.ts')}` ]
+  apis: [ '**/*.ts' ]
 }
