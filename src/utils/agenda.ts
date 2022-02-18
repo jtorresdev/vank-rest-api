@@ -20,8 +20,8 @@ const initAgenda = async () => {
   })
 
   await agenda.start()
-  
-  await agenda.every('24 hours', 'get invoices CSV')
+
+  await agenda.every('0 15 * * *', 'get invoices CSV') 
 }
 
 export default initAgenda
